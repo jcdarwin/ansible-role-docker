@@ -3,12 +3,12 @@ mebooks.ansible-role-docker
 
 Ansible role for installing Docker on Ubuntu and Centos distributions, based on [rgarrigue.docker](https://github.com/rgarrigue/ansible-role-docker).
 
-Install [Docker](https:/docker.com) as of 2017, i.e. `docker-ce` as in community edition, and remove the deprecated packages `docker-engine`, `docker` etc [![Build Status](https://travis-ci.org/rgarrigue/ansible-role-docker.svg?branch=master)](https://travis-ci.org/rgarrigue/ansible-role-docker)
+Install [Docker](https:/docker.com) as of 2017, i.e. `docker-ce` as in community edition, and remove the deprecated packages `docker-engine`, `docker` etc
 
 Requirements
 ------------
 
-Developped and tested on *Ubuntu Server 16.10 Yakkety*, and *CentOS 7*
+Developed and tested on *Ubuntu Server 16.10 Yakkety*, and *CentOS 7*
 
 Role Variables
 --------------
