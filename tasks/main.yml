@@ -1,0 +1,82 @@
+---
+# tasks file for mebooks.ansible-role-docker
+
+# Not necessary if we've run ansible-role-common
+# - name: Add apt-transport-https
+#   apt:
+#     name: apt-transport-https
+#     state: present
+#   when: ansible_pkg_mgr == "apt"
+#   tags: docker
+
+- name: Add apt repository key
+  apt_key:
+    id: "{{ apt_key_signature }}"
+    url: "{{ apt_key_url }}"
+    state: present
+  when: ansible_pkg_mgr == "apt"
+
+- name: Add apt repository and update cache
+  apt_repository:
+    repo: "{{ apt_repository }}"
+    update_cache: yes
+    state: present
+  when: ansible_pkg_mgr == "apt"
+  tags: docker0
+
+- name: Add yum repository
+  yum_repository:
+    name: docker-ce-stable
+    description: Docker CE Stable - $basearch
+    baseurl: " {{ yum_baseurl }}"
+    enabled: yes
+    gpgcheck: yes
+    gpgkey: " {{ yum_gpgkey }} "
+  when: ansible_pkg_mgr == "yum"
+  tags: docker
+
+- name: Remove deprecated packages
+  package:
+    name: "{{ item }}"
+    state: absent
+  with_items: "{{ docker_deprecated_packages }}"
+  tags: docker
+
+- name: Install or update docker package
+  package:
+    name: docker-ce
+    state: latest
+  tags: docker
+
+- name: Install pip
+  package:
+    name: python-pip
+    state: present
+  tags: docker
+
+- name: Install docker's python library
+  pip:
+    name: docker-py
+    state: latest
+  tags: docker
+
+- name: Group
+  group:
+    name: docker
+    state: present
+  tags: docker
+
+- name: User in group
+  user:
+    name: "{{ user }}"
+    groups: docker
+    append: yes
+    state: present
+  tags: docker
+
+- name: Service
+  service:
+    name: docker
+    state: started
+    enabled: yes
+  tags: docker

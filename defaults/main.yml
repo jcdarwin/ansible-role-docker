@@ -1,0 +1,21 @@
+---
+# defaults file for mebooks.ansible-role-docker
+
+apt_key_signature: 0EBFCD88
+apt_key_url: https://download.docker.com/linux/ubuntu/gpg
+
+# Known issue : replace manually zesty by xenial until ubuntu 17.04 gets official support
+apt_repository: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+
+yum_baseurl: https://download.docker.com/linux/centos/7/$basearch/stable
+yum_gpgkey: https://download.docker.com/linux/centos/gpg
+
+user: docker
+
+docker_deprecated_packages:
+  - container-selinux
+  - containerd
+  - docker
+  - docker-common
+  - docker-engine
+  - docker-selinux
